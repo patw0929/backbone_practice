@@ -1,0 +1,18 @@
+{
+    "users": [
+    {
+        "firstName": "Patrick",
+        "lastName": "Wang",
+        "age": 27
+    },
+    {
+        "firstName": "Henry",
+        "lastName": "Lin",
+        "age": 20
+    },
+    {
+        "firstName": "Mary",
+        "lastName": "Chang",
+        "age": 23
+    }]
+}

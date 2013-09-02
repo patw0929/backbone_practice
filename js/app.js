@@ -1,8 +1,20 @@
+var Users = Backbone.Collection.extend({
+
+    url: 'api_users'
+
+});
+
 var UserList = Backbone.View.extend({
 
     el: $('.page'),
     render: function () {
-        this.$el.html("Content will be placed here!");
+        var that = this;
+        var users = new Users();
+        users.fetch({
+            success: function () {
+                that.$el.html("Content test!");
+            }
+        });  
     }
 
 });
