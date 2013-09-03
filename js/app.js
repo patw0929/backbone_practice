@@ -14,6 +14,10 @@ $.fn.serializeObject = function() {
   return o;
 };
 
+var htmlEncode = function (value) {
+    return $('<div />').text(value).html();
+};
+
 var Users = Backbone.Collection.extend({
 
     url: 'api_users'

@@ -55,9 +55,9 @@
             <tbody>
                 <% _.each(users, function (user) { %>
                     <tr>
-                        <td><%= user.get('firstName') %></td>
-                        <td><%= user.get('lastName') %></td>
-                        <td><%= user.get('age') %></td>
+                        <td><%= htmlEncode(user.get('firstName')) %></td>
+                        <td><%= htmlEncode(user.get('lastName')) %></td>
+                        <td><%= htmlEncode(user.get('age')) %></td>
                         <td><a href="#/edit/<%= user.id %>" class="btn">Edit</a></td>
                     </tr>
                 <% }); %>
