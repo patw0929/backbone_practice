@@ -1,6 +1,28 @@
+$.fn.serializeObject = function() {
+  var o = {};
+  var a = this.serializeArray();
+  $.each(a, function() {
+      if (o[this.name] !== undefined) {
+          if (!o[this.name].push) {
+              o[this.name] = [o[this.name]];
+          }
+          o[this.name].push(this.value || '');
+      } else {
+          o[this.name] = this.value || '';
+      }
+  });
+  return o;
+};
+
 var Users = Backbone.Collection.extend({
 
     url: 'api_users'
+
+});
+
+var User = Backbone.Model.extend({
+
+    urlRoot: 'api_users'
 
 });
 
@@ -10,6 +32,19 @@ var EditUser = Backbone.View.extend({
     render: function () {
         var template = _.template($("#edit-user-template").html(), {});
         this.$el.html(template);
+    },
+    events: {
+        'submit .edit-user-form': 'saveUser'
+    },
+    saveUser: function (e) {
+        var userDetails = $(e.currentTarget).serializeObject();
+        var user = new User();
+        user.save(userDetails, {
+            success: function (user) {
+                router.navigate('', {trigger: true});
+            }
+        });
+        return false;
     }
 
 });

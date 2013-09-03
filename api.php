@@ -61,7 +61,9 @@ if (($method=='POST')&&($object_id=='')){
     }
     $input_data->id=uniqid();
     $file_data->{$object_name}[]=$input_data;
-    file_put_contents($file_name, json_encode($file_data));
+    if (file_put_contents($file_name, json_encode($file_data)) > 0) {
+        echo 200;
+    }
     exit;
 }
 
