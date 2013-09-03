@@ -114,7 +114,9 @@ if ($method=='PUT'){
                 exit;
             }
             $file_data->{$object_name}[$object_key]=$input_data;
-            file_put_contents($file_name, json_encode($file_data));
+            if (file_put_contents($file_name, json_encode($file_data)) > 0 ) {
+                echo 200;
+            }
             exit;
         }
     }   

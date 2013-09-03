@@ -29,9 +29,20 @@ var User = Backbone.Model.extend({
 var EditUser = Backbone.View.extend({
 
     el: $('.page'),
-    render: function () {
-        var template = _.template($("#edit-user-template").html(), {});
-        this.$el.html(template);
+    render: function (options) {
+        var that = this;
+        if (options.id) {
+            var user = new User({id: options.id});
+            user.fetch({
+                success: function (user) {
+                    var template = _.template($('#edit-user-template').html(), {user: user});
+                    that.$el.html(template);
+                }
+            });
+        } else {
+            var template = _.template($("#edit-user-template").html(), {user: null});
+            this.$el.html(template);
+        }
     },
     events: {
         'submit .edit-user-form': 'saveUser'
@@ -68,7 +79,8 @@ var UserList = Backbone.View.extend({
 var Router = Backbone.Router.extend({
     routes: {
         '': 'home',
-        'new': 'editUser'
+        'new': 'editUser',
+        'edit/:id': 'editUser'
     }
 });
 
@@ -76,8 +88,8 @@ var userList = new UserList();
 var editUser = new EditUser();
 
 var router = new Router();
-router.on('route:editUser', function () {
-    editUser.render();
+router.on('route:editUser', function (id) {
+    editUser.render({ id: id });
 });
 
 router.on('route:home', function () {
