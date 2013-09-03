@@ -4,6 +4,16 @@ var Users = Backbone.Collection.extend({
 
 });
 
+var EditUser = Backbone.View.extend({
+
+    el: $('.page'),
+    render: function () {
+        var template = _.template($("#edit-user-template").html(), {});
+        this.$el.html(template);
+    }
+
+});
+
 var UserList = Backbone.View.extend({
 
     el: $('.page'),
@@ -22,13 +32,19 @@ var UserList = Backbone.View.extend({
 
 var Router = Backbone.Router.extend({
     routes: {
-        '': 'home'
+        '': 'home',
+        'new': 'editUser'
     }
 });
 
 var userList = new UserList();
+var editUser = new EditUser();
 
 var router = new Router();
+router.on('route:editUser', function () {
+    editUser.render();
+});
+
 router.on('route:home', function () {
     userList.render();
 });
