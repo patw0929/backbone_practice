@@ -129,7 +129,9 @@ if ($method=='DELETE'){
     foreach($file_data->$object_name as $object_key => $object_val){
         if ($object_val->id==$object_id){
             array_splice($file_data->$object_name,$object_key,1);
-            file_put_contents($file_name, json_encode($file_data));
+            if (file_put_contents($file_name, json_encode($file_data)) > 0) {
+                echo 200;
+            }
             exit;
         }
     }           

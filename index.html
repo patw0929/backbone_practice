@@ -28,10 +28,13 @@
             <input type="text" name="age" value="<%= user ? user.get('age') : '' %>" />
 
             <hr />
+
+            <button type="submit" class="btn"><%= user ? 'Update' : 'Create' %> User</button>
+
             <% if (user) {%>
                 <input type="hidden" name="id" value="<%= user.get('id') %>" />
+                <button class="btn btn-danger delete">Delete</button>
             <% } %>
-            <button type="submit" class="btn"><%= user ? 'Update' : 'Create' %> User</button>
 
         </form>
 

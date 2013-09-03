@@ -32,8 +32,8 @@ var EditUser = Backbone.View.extend({
     render: function (options) {
         var that = this;
         if (options.id) {
-            var user = new User({id: options.id});
-            user.fetch({
+            that.user = new User({id: options.id});
+            that.user.fetch({
                 success: function (user) {
                     var template = _.template($('#edit-user-template').html(), {user: user});
                     that.$el.html(template);
@@ -45,7 +45,8 @@ var EditUser = Backbone.View.extend({
         }
     },
     events: {
-        'submit .edit-user-form': 'saveUser'
+        'submit .edit-user-form': 'saveUser',
+        'click .delete': 'deleteUser'
     },
     saveUser: function (e) {
         var userDetails = $(e.currentTarget).serializeObject();
@@ -56,8 +57,19 @@ var EditUser = Backbone.View.extend({
             }
         });
         return false;
-    }
+    },
+    deleteUser: function (e) {
 
+        if (confirm('Do you really wanna delete this user?')) {
+            this.user.destroy({
+                success: function () {
+                    router.navigate('', {trigger: true});
+                }
+            });
+        }
+
+        return false;
+    }
 });
 
 var UserList = Backbone.View.extend({
